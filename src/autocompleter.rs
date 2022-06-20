@@ -39,6 +39,10 @@ impl Autocompleter {
         Ok(val)
     }
 
+    pub fn add_word(&mut self, word: String) {
+        self.trie.add_record(word);
+    }
+
     pub fn predict_completions(&self, prefix: &String) -> Vec<String> {
         let mut res: Vec<String> = Vec::new();
         let mut tmp = self.trie.get_root();
