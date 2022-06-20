@@ -16,9 +16,7 @@ pub struct Autocompleter {
 
 impl Autocompleter {
     pub fn new() -> Autocompleter {
-        Autocompleter {
-            trie: Mwt::new(),
-        }
+        Autocompleter { trie: Mwt::new() }
     }
 
     pub fn from_dict(dict_filename: &String) -> Result<Autocompleter, String> {
@@ -65,7 +63,11 @@ impl Autocompleter {
             dfs_results.sort_unstable_by(|a, b| a.1.cmp(&b.1));
             dfs_results.sort_by(|a, b| a.0.cmp(&b.0));
 
-            let num_to_ret = if dfs_results.len() < ELEMENTS_TO_RETURN { dfs_results.len() } else { ELEMENTS_TO_RETURN };
+            let num_to_ret = if dfs_results.len() < ELEMENTS_TO_RETURN {
+                dfs_results.len()
+            } else {
+                ELEMENTS_TO_RETURN
+            };
 
             for ind in 0..num_to_ret {
                 res.push(dfs_results[ind].1.clone());
