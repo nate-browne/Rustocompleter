@@ -32,15 +32,15 @@ impl Config {
 
 fn grab_input(prompt: &str) -> String {
     print!("{prompt}");
-    stdout().flush().unwrap();
+    if let Err(e) = stdout().flush() {
+        eprintln!("Error flushing output stream: {e}");
+        exit(1);
+    }
 
     let mut option = String::new();
-    match stdin().read_line(&mut option) {
-        Ok(val) => val,
-        Err(e) => {
-            eprintln!("Error occurred reading input: {e}");
-            exit(1);
-        }
+    if let Err(e) = stdin().read_line(&mut option) {
+        eprintln!("Error occurred reading input from stdin: {e}");
+        exit(1);
     };
     String::from(option.trim())
 }
@@ -60,7 +60,7 @@ fn main() -> ExitCode {
     let mut ac = if conf.filename.as_str() == "" {
         Autocompleter::new()
     } else {
-        match Autocompleter::from_dict(&conf.filename) {
+        match Autocompleter::from_dict(conf.filename) {
             Ok(acc) => acc,
             Err(e) => {
                 eprintln!("{}", e);
