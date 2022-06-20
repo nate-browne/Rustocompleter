@@ -44,9 +44,9 @@ impl MwtNode {
     }
 
     /// Accessor method for the count of appearances of a finished word.
-    /// 
+    ///
     /// # Return value
-    /// 
+    ///
     /// Copy of the `rank` field of the given `MwtNode`.
     pub fn get_rank(&self) -> i32 {
         self.rank
