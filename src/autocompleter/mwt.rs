@@ -22,9 +22,7 @@ pub struct MwtNode {
 }
 
 impl MwtNode {
-    /// Constructs an empty MwtNode.
-    ///
-    /// All fields are set to default empty values.
+    /// Constructs an new, empty MwtNode.
     fn new() -> MwtNode {
         MwtNode {
             is_end: false,
@@ -107,8 +105,7 @@ pub struct Mwt {
 }
 
 impl Mwt {
-    /// Constructs a new `MWT`.
-    /// This operation consists of simply constructing the `root`.
+    /// Constructs a new, empty `MWT`.
     pub fn new() -> Mwt {
         Mwt {
             root: Box::new(MwtNode::new()),
