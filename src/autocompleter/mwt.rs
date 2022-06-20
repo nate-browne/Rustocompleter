@@ -18,7 +18,7 @@ impl MwtNode {
         }
     }
 
-    fn get_data(&self) -> &String {
+    pub fn get_data(&self) -> &String {
         &self.data
     }
 
@@ -26,7 +26,7 @@ impl MwtNode {
         self.rank += 1;
     }
 
-    fn get_rank(&self) -> i32 {
+    pub fn get_rank(&self) -> i32 {
         self.rank
     }
 
@@ -38,27 +38,27 @@ impl MwtNode {
         self.is_end = !self.is_end;
     }
 
-    fn get_end(&self) -> bool {
+    pub fn get_end(&self) -> bool {
         self.is_end
     }
 
-    pub fn get_children(&self) -> HeapMap {
-        self.children
+    pub fn get_children(&self) -> &HeapMap {
+        &self.children
     }
 }
 
 pub struct Mwt {
-    root: MwtNode,
+    root: Box<MwtNode>,
 }
 
 impl Mwt {
     pub fn new() -> Mwt {
         Mwt {
-            root: MwtNode::new(),
+            root: Box::new(MwtNode::new()),
         }
     }
 
-    pub fn get_root(&self) -> &MwtNode {
+    pub fn get_root(&self) -> &Box<MwtNode> {
         &self.root
     }
 
