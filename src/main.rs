@@ -78,7 +78,11 @@ fn main() -> ExitCode {
                 ac.add_word(st);
                 println!("String added!");
             }
-            "p" => {}
+            "p" => {
+                let prefix = grab_input("Enter prefix to get completions for: ");
+                let result = ac.predict_completions(&prefix);
+                println!("Completions for {prefix}: {:?}", result);
+            }
             "q" => break,
             _ => println!("Command {input} is not valid"),
         }
