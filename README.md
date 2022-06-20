@@ -7,3 +7,5 @@ manually added to.
 Autocomplete functionality is provided via a [Multi-way Trie data structure](https://en.wikipedia.org/wiki/Trie).
 Another option would have been to use a [ternary search trie](https://en.wikipedia.org/wiki/Ternary_search_tree) but
 I find multiway tries to be easier to implement despite being less memory efficient.
+
+You can use the provided dictionary files in the `files` directory to initialize by passing the filename as a command line argument, or initialize from scratch by not passing a filename.
