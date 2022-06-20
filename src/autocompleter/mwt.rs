@@ -22,20 +22,8 @@ impl MwtNode {
         &self.data
     }
 
-    fn increment_rank(&mut self) {
-        self.rank += 1;
-    }
-
     pub fn get_rank(&self) -> i32 {
         self.rank
-    }
-
-    fn set_data(&mut self, data: String) {
-        self.data = data;
-    }
-
-    fn toggle_end(&mut self) {
-        self.is_end = !self.is_end;
     }
 
     pub fn get_end(&self) -> bool {
@@ -44,6 +32,18 @@ impl MwtNode {
 
     pub fn get_children(&self) -> &HeapMap {
         &self.children
+    }
+
+    fn increment_rank(&mut self) {
+        self.rank += 1;
+    }
+
+    fn set_data(&mut self, data: String) {
+        self.data = data;
+    }
+
+    fn toggle_end(&mut self) {
+        self.is_end = !self.is_end;
     }
 }
 

@@ -19,7 +19,7 @@ impl Autocompleter {
         Autocompleter { trie: Mwt::new() }
     }
 
-    pub fn from_dict(dict_filename: &String) -> Result<Autocompleter, String> {
+    pub fn from_dict(dict_filename: String) -> Result<Autocompleter, String> {
         let mut val = Autocompleter::new();
 
         let dict_file = match File::open(dict_filename) {
