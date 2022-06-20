@@ -35,18 +35,18 @@ impl Autocompleter {
     ///
     /// # Arguments
     ///
-    /// `dict_filename` (`String`) - Name of the file to parse for the dictionary.
+    /// `dict_filename` (`&String`) - Name of the file to parse for the dictionary.
     ///
     /// # Return value
     ///
     /// Either the constructed `Autocompleter`, or a `Error` with the error string.
-    pub fn from_dict(dict_filename: String) -> Result<Autocompleter, String> {
+    pub fn from_dict(dict_filename: &String) -> Result<Autocompleter, String> {
         let mut val = Autocompleter::new();
 
         // Try to open the file for reading, or bail out if an error occurs.
         let dict_file = match File::open(dict_filename) {
             Ok(f) => f,
-            Err(e) => return Err(format!("Error opening file: {e}")),
+            Err(e) => return Err(format!("Error opening file `{dict_filename}`: {e}")),
         };
 
         // Read through the file line by line
