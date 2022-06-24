@@ -1,4 +1,6 @@
-use std::fs::File;
+extern crate fs_err;
+use fs_err::File;
+
 use std::io::{BufRead, BufReader};
 
 mod mwt;
