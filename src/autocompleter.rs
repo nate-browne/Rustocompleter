@@ -42,7 +42,7 @@ impl Autocompleter {
     /// # Return value
     ///
     /// Either the constructed `Autocompleter`, or a `Error` with the error string.
-    pub fn from_dict(dict_filename: &String) -> Result<Autocompleter, String> {
+    pub fn from_file(dict_filename: &String) -> Result<Autocompleter, String> {
         let mut val = Autocompleter::new();
 
         // Try to open the file for reading, or bail out if an error occurs.
@@ -55,7 +55,11 @@ impl Autocompleter {
         let reader = BufReader::new(dict_file);
         for line in reader.lines() {
             match line {
-                Ok(l) => val.trie.add_record(l),
+                Ok(l) => {
+                    for word in l.split_whitespace() {
+                        val.trie.add_record(word.to_string());
+                    }
+                }
                 Err(e) => return Err(format!("Error reading line from file: {e}")),
             }
         }

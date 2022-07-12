@@ -81,10 +81,10 @@ fn main() -> ExitCode {
     let mut ac = if conf.filename.as_str() == "" {
         Autocompleter::new()
     } else {
-        match Autocompleter::from_dict(&conf.filename) {
+        match Autocompleter::from_file(&conf.filename) {
             Ok(acc) => acc,
             Err(e) => {
-                eprintln!("{}", e);
+                eprintln!("{e}");
                 exit(1);
             }
         }
