@@ -84,7 +84,7 @@ fn main() -> ExitCode {
         match Autocompleter::from_file(&conf.filename) {
             Ok(acc) => acc,
             Err(e) => {
-                eprintln!("{}", e);
+                eprintln!("{e}");
                 exit(1);
             }
         }
