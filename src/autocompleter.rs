@@ -56,7 +56,8 @@ impl Autocompleter {
         for line in reader.lines() {
             match line {
                 Ok(l) => {
-                    for word in l.split_whitespace() {
+                    for mut word in l.split_whitespace() {
+                        word = word.trim_end_matches(|c: char| c.is_ascii_punctuation());
                         val.trie.add_record(word.to_string());
                     }
                 }
@@ -115,8 +116,9 @@ impl Autocompleter {
             let mut dfs_results = Autocompleter::depth_first_search(Some(tmp));
 
             // Sort by alphabetical order first, then stable sort on frequency second
+            // Frequency sort should be reversed from largest to smallest
             dfs_results.sort_unstable_by(|a, b| a.1.cmp(&b.1));
-            dfs_results.sort_by(|a, b| a.0.cmp(&b.0));
+            dfs_results.sort_by(|a, b| b.0.cmp(&a.0));
 
             let num_to_ret = if dfs_results.len() < ELEMENTS_TO_RETURN {
                 dfs_results.len()
