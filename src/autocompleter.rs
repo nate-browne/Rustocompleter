@@ -27,6 +27,7 @@ pub struct Autocompleter {
 /// # Fields
 ///
 /// `count` (`i32`) - number of instances of a particular word
+///
 /// `data` (`String`) - the word itself
 struct SortResult {
     count: i32,
