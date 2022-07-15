@@ -9,12 +9,6 @@ use mwt::{Mwt, MwtNode};
 const MIN_LEN: usize = 1;
 const ELEMENTS_TO_RETURN: usize = 10;
 
-/// This tuple is the return value used in DFS for ease
-/// of sorting/use.
-///
-/// First element is the rank, second is the word.
-type RetTup = (i32, String);
-
 /// This struct contains functionality related to performing
 /// word autocompletion. It acts as a sort of wrapper class
 /// for the underlying MWT.
@@ -24,6 +18,25 @@ type RetTup = (i32, String);
 /// `trie` (`Mwt`) - The underlying MWT structure that provides the functionality.
 pub struct Autocompleter {
     trie: Mwt,
+}
+
+/// This internal struct is used to store the results from the DFS
+/// It's functionally identical to a tuple of `(count, data)`, just with the
+/// added benefit of being able to reference fields by name instead of by index.
+///
+/// # Fields
+///
+/// `count` (`i32`) - number of instances of a particular word
+/// `data` (`String`) - the word itself
+struct SortResult {
+    count: i32,
+    data: String,
+}
+
+impl SortResult {
+    fn new(count: i32, data: String) -> SortResult {
+        SortResult { count, data, }
+    }
 }
 
 impl Autocompleter {
@@ -117,8 +130,8 @@ impl Autocompleter {
 
             // Sort by alphabetical order first, then stable sort on frequency second
             // Frequency sort should be reversed from largest to smallest
-            dfs_results.sort_unstable_by(|a, b| a.1.cmp(&b.1));
-            dfs_results.sort_by(|a, b| b.0.cmp(&a.0));
+            dfs_results.sort_unstable_by(|a, b| a.data.cmp(&b.data));
+            dfs_results.sort_by(|a, b| b.count.cmp(&a.count));
 
             let num_to_ret = if dfs_results.len() < ELEMENTS_TO_RETURN {
                 dfs_results.len()
@@ -127,7 +140,7 @@ impl Autocompleter {
             };
 
             for ind in 0..num_to_ret {
-                res.push(dfs_results[ind].1.clone());
+                res.push(dfs_results[ind].data.clone());
             }
         }
         res
@@ -146,13 +159,13 @@ impl Autocompleter {
     ///
     /// A vector of tuples, where the first value is the frequency and the second is the
     /// word corresponding to that frequency.
-    fn depth_first_search(node: Option<&Box<MwtNode>>) -> Vec<RetTup> {
-        let mut ret: Vec<RetTup> = Vec::new();
+    fn depth_first_search(node: Option<&Box<MwtNode>>) -> Vec<SortResult> {
+        let mut ret: Vec<SortResult> = Vec::new();
         if let Some(nd) = node {
             let children = nd.get_children();
 
             if nd.get_end() {
-                ret.push((nd.get_rank(), nd.get_data().to_string()));
+                ret.push(SortResult::new(nd.get_rank(), nd.get_data().to_string()));
             }
 
             for value in children.values() {
