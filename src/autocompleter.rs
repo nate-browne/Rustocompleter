@@ -36,7 +36,7 @@ struct SortResult {
 
 impl SortResult {
     fn new(count: i32, data: String) -> SortResult {
-        SortResult { count, data, }
+        SortResult { count, data }
     }
 }
 
